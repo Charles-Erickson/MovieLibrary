@@ -6,27 +6,32 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 
+
 namespace MovieLibrary.Controllers
 {
     public class MoviesController : ApiController
     {
+        private ApplicationDbContext db = new ApplicationDbContext();
+
+
+
         Movies[] movies = new Movies[]
       {
-        new Models.Movies { Title = "The Departed", Genre = "Drama", DirectorName = "Martin Scorsese"},
-        new Models.Movies { Title = "The Dark Knight", Genre = "Drama", DirectorName = "Christopher Nolan"},
-        new Models.Movies { Title = "Inception", Genre = "Drama", DirectorName = "Christopher Nolan"},
-        new Models.Movies { Title = "Pineapple Express", Genre = "Comedy", DirectorName = "David Gordon Green"},
-        new Models.Movies { Title = "Die Hard", Genre = "Action", DirectorName = "John McTiernan"}
+        new Movies { Title = "The Departed", Genre = "Drama", DirectorName = "Martin Scorsese"},
+        new Movies { Title = "The Dark Knight", Genre = "Drama", DirectorName = "Christopher Nolan"},
+        new Movies { Title = "Inception", Genre = "Drama", DirectorName = "Christopher Nolan"},
+        new Movies { Title = "Pineapple Express", Genre = "Comedy", DirectorName = "David Gordon Green"},
+        new Movies { Title = "Die Hard", Genre = "Action", DirectorName = "John McTiernan"}
       };
 
         public IEnumerable<Movies> GetAllProducts()
         {
-            return movies;
+            return db.movies.toList;
         }
 
         public IHttpActionResult GetProduct(int id)
         {
-            var product = movies.FirstOrDefault((p) => p.MovieId == id);
+            var product = movies.FirstOrDefault(p => p.MovieId == id);
             if (product == null)
             {
                 return NotFound();
@@ -35,4 +40,4 @@ namespace MovieLibrary.Controllers
         }
     }
 }
-}
+
