@@ -1,4 +1,4 @@
-﻿const uri = "api/Movies";
+﻿//const uri = "api/Movies";
 let movies = null;
 function getCount(data) {
     const el = $("#counter");
@@ -14,7 +14,7 @@ function getCount(data) {
 }
 
 $(document).ready(function () {
-    getData();
+    // getData();
 });
 
 function getData() {
