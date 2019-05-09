@@ -12,23 +12,25 @@ using System.Web.Http.ModelBinding;
 
 namespace MovieLibrary.Controllers
 {
-    [Route("api/[controller]")]
+   // [Route("api/[controller]")]
     public class MoviesController : ApiController
     {
         public ApplicationDbContext db = new ApplicationDbContext();
-        //public List<T> movies = new List<T>;
+        //public List<Movies> movies = new List<Movies>();
 
 
       public MoviesController()
       {
-            new Movies { Title = "The Departed", Genre = "Drama", DirectorName = "Martin Scorsese" };
-            new Movies { Title = "The Dark Knight", Genre = "Drama", DirectorName = "Christopher Nolan" };
-            new Movies { Title = "Inception", Genre = "Drama", DirectorName = "Christopher Nolan" };
-            new Movies { Title = "Pineapple Express", Genre = "Comedy", DirectorName = "David Gordon Green" };
-            new Movies { Title = "Die Hard", Genre = "Action", DirectorName = "John McTiernan" };
+            Movies[] movies = new Movies[] {
+            new Movies { Title = "The Departed", Genre = "Drama", DirectorName = "Martin Scorsese" },
+            new Movies { Title = "The Dark Knight", Genre = "Drama", DirectorName = "Christopher Nolan" },
+            new Movies { Title = "Inception", Genre = "Drama", DirectorName = "Christopher Nolan" },
+            new Movies { Title = "Pineapple Express", Genre = "Comedy", DirectorName = "David Gordon Green" },
+            new Movies { Title = "Die Hard", Genre = "Action", DirectorName = "John McTiernan" }
+            };
       }
 
-        public IEnumerable<Movies> GetAllMovies()
+        public IEnumerable<Movies> Get()
         {
             return db.Movies.ToList();
         }
@@ -45,7 +47,7 @@ namespace MovieLibrary.Controllers
     
     // PUT: api/Movies/5
     [ResponseType(typeof(void))]
-    public IHttpActionResult PutMovie(int id, Movies movie)
+    public IHttpActionResult Put(int id, Movies movie)
     {
         if (!ModelState.IsValid)
         {
@@ -61,7 +63,7 @@ namespace MovieLibrary.Controllers
         return StatusCode(HttpStatusCode.NoContent);
     }
 
-    public IHttpActionResult PostMovie(Movies movies)
+    public IHttpActionResult Post(Movies movies)
     {
       if (!ModelState.IsValid)
       return BadRequest("Invalid data.");
@@ -86,7 +88,7 @@ namespace MovieLibrary.Controllers
 
         // DELETE: api/Movies/5
         [ResponseType(typeof(Movies))]
-        public IHttpActionResult DeleteMovie(int id)
+        public IHttpActionResult Delete(int id)
         {
             Movies movie = db.Movies.Find(id);
             if (movie == null)

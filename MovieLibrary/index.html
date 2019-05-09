@@ -24,10 +24,13 @@
             // Send an AJAX request
             $.getJSON(uri)
                 .done(function (data) {
+                    console.log('data', data);
                     // On success, 'data' contains a list of products.
                     $.each(data, function (key, item) {
+                        console.log('KEY', key);
+                        console.log('item', item);
                         // Add a list item for the product.
-                        $('<li>', { text: formatItem(item) }).appendTo($('#movies'));
+                        $('<li>MIKE', { text: formatItem(item) }).appendTo($('#movies'));
                     });
                 });
         });
@@ -48,10 +51,12 @@
         }
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script src="/js/jquery.movies.js"></script>
+    <script src="MovieLibrary/Scripts/jquery.movies.js"></script>
 </body>
 
 </html>
 
 <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>-->
 <!--<script src="/js/jquery.movies.js"></script>-->
+
+
