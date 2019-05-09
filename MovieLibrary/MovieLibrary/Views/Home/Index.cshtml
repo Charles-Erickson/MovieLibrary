@@ -80,15 +80,41 @@
                     $('#movies').text('Error: ' + err);
                 });
         }
-        function delete(){
-            var id = $('#MovieId').val();
-            $.deleteJSON(uri + '/' + id)
-                .done(function (data)){
-                $('#movies').text(formatItem(data));
-            })
-                .fail(function (jqXHR, textStatus, err) {
-                $('#movies').text('Error: ' + err);
+
+        function remove(id) {
+            $.ajax({
+                url: uri + "/" + id,
+                type: "DELETE",
+                success: function (result) {
+                    getData();
+                }
             });
+        }
+
+        function add() {
+            const item = {
+                name: $("#add-name").val(),
+                isComplete: false
+            };
+
+            $.ajax({
+                type: "POST",
+                accepts: "application/json",
+                url: uri,
+                contentType: "application/json",
+                data: JSON.stringify(item),
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert("Something went wrong!");
+                },
+                success: function (result) {
+                    getData();
+                    $("#add-name").val("");
+                }
+            });
+        }
+
+
+
         }
     </script>
     @*<script src="../../Scripts/jquery.movies.js"></script>*@
