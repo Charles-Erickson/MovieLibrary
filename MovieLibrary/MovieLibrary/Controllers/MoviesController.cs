@@ -19,25 +19,41 @@ namespace MovieLibrary.Controllers
         //public List<Movies> movies = new List<Movies>();
 
 
-      public MoviesController()
-      {
-            Movies[] movies = new Movies[] {
-            new Movies { Title = "The Departed", Genre = "Drama", DirectorName = "Martin Scorsese" },
-            new Movies { Title = "The Dark Knight", Genre = "Drama", DirectorName = "Christopher Nolan" },
-            new Movies { Title = "Inception", Genre = "Drama", DirectorName = "Christopher Nolan" },
-            new Movies { Title = "Pineapple Express", Genre = "Comedy", DirectorName = "David Gordon Green" },
-            new Movies { Title = "Die Hard", Genre = "Action", DirectorName = "John McTiernan" }
-            };
-      }
+      //public MoviesController()
+      //{
+      //      Movies[] movies = new Movies[] {
+      //      new Movies { Title = "The Departed", Genre = "Drama", DirectorName = "Martin Scorsese" },
+      //      new Movies { Title = "The Dark Knight", Genre = "Drama", DirectorName = "Christopher Nolan" },
+      //      new Movies { Title = "Inception", Genre = "Drama", DirectorName = "Christopher Nolan" },
+      //      new Movies { Title = "Pineapple Express", Genre = "Comedy", DirectorName = "David Gordon Green" },
+      //      new Movies { Title = "Die Hard", Genre = "Action", DirectorName = "John McTiernan" }
+      //      };
+      //}
 
         public IEnumerable<Movies> Get()
         {
             return db.Movies.ToList();
         }
 
-        public IHttpActionResult GetMovie(int id)
+        [HttpGet]
+        [Route("api/movies/{value?}/prop/{property?}")]
+        public IHttpActionResult GetMovie(string value, string property)
         {
-            var product = db.Movies.FirstOrDefault(p => p.MovieId == id);
+            Movies product = null;
+            switch (property)
+            {
+                case "Title":
+                    product = db.Movies.FirstOrDefault(p => p.Title == value);
+                    break;
+                case "Genre":
+                    product = db.Movies.FirstOrDefault(p => p.Genre == value);
+                    break;
+                case "DirectorName":
+                    product = db.Movies.FirstOrDefault(p => p.DirectorName == value);
+                    break;
+                default:
+                    break;
+            }
             if (product == null)
             {
                 return NotFound();

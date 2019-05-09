@@ -1,29 +1,29 @@
 ﻿@*<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET Web API is a framework that makes it easy to build HTTP services that reach
-            a broad range of clients, including browsers and mobile devices. ASP.NET Web API
-            is an ideal platform for building RESTful applications on the .NET Framework.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301870">Learn more &raquo;</a></p>
+        <h1>ASP.NET</h1>
+        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
+        <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301871">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301872">Learn more &raquo;</a></p>
-    </div>
-</div>*@
+    <div class="row">
+        <div class="col-md-4">
+            <h2>Getting started</h2>
+            <p>
+                ASP.NET Web API is a framework that makes it easy to build HTTP services that reach
+                a broad range of clients, including browsers and mobile devices. ASP.NET Web API
+                is an ideal platform for building RESTful applications on the .NET Framework.
+            </p>
+            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301870">Learn more &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>Get more libraries</h2>
+            <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
+            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301871">Learn more &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>Web Hosting</h2>
+            <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
+            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301872">Learn more &raquo;</a></p>
+        </div>
+    </div>*@
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -37,17 +37,31 @@
         <ul id="movies" />
     </div>
     <div>
-        <h2>Search by ID</h2>
-        <input type="text" id="MovieId" size="5" />
-        <input type="button" value="Search" onclick="find();" />
-        <p id="product" />
+        <h2>Search by Title</h2>
+        <input type="text" id="Title" size="5" />
+        <input type="button" value="Search" onclick="find('Title');" />
+        <p id="TitleResults" />
+    </div>
+
+    <div>
+        <h2>Search by Director</h2>
+        <input type="text" id="DirectorName" size="5" />
+        <input type="button" value="Search" onclick="find('DirectorName');" />
+        <p id="DirectorNameResults" />
+    </div>
+
+    <div>
+        <h2>Search by Genre</h2>
+        <input type="text" id="Genre" size="5" />
+        <input type="button" value="Search" onclick="find('Genre');" />
+        <p id="GenreResults" />
     </div>
 
     @*<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>*@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
     <script>
-        var uri = 'api/movies';
+        var uri = 'http://Localhost:58933/api/movies';
 
         $(document).ready(function () {
             // Send an AJAX request
@@ -67,17 +81,21 @@
         });
 
         function formatItem(item) {
-            return item.Title + ': ' + item.Genre+': '+item.DirectorName;
+            return item.Title + ': ' + item.Genre + ': ' + item.DirectorName;
         }
 
-        function find() {
-            var id = $('#MovieId').val();
-            $.getJSON(uri + '/' + id)
+        function find(id) {
+            var element = $('#' + id);
+            var value = element.val();
+            $.getJSON(uri + '/' + value+'/prop/' + id, function (data) {
+                console.log('success');
+                $(`#${id}Result`).text(formatItem(data));
+            })
                 .done(function (data) {
-                    $('#movies').text(formatItem(data));
+                    $(`#${id}Result`).text(formatItem(data));
                 })
                 .fail(function (jqXHR, textStatus, err) {
-                    $('#movies').text('Error: ' + err);
+                    $(`#${id}Result`).text('Error: ' + err);
                 });
         }
 
@@ -151,9 +169,6 @@
         }
 
 
-
-
-        }
     </script>
     @*<script src="../../Scripts/jquery.movies.js"></script>*@
 </body>
