@@ -12,6 +12,7 @@ using System.Web.Http.ModelBinding;
 
 namespace MovieLibrary.Controllers
 {
+    [Route("api/[controller]")]
     public class MoviesController : ApiController
     {
         public ApplicationDbContext db = new ApplicationDbContext();
