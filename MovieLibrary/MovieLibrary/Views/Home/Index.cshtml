@@ -80,6 +80,16 @@
                     $('#movies').text('Error: ' + err);
                 });
         }
+        function delete(){
+            var id = $('#MovieId').val();
+            $.deleteJSON(uri + '/' + id)
+                .done(function (data)){
+                $('#movies').text(formatItem(data));
+            })
+                .fail(function (jqXHR, textStatus, err) {
+                $('#movies').text('Error: ' + err);
+            });
+        }
     </script>
     @*<script src="../../Scripts/jquery.movies.js"></script>*@
 </body>
