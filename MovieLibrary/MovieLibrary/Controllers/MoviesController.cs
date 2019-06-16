@@ -100,6 +100,11 @@ namespace MovieLibrary.Controllers
             return Ok();
         }
 
+        [Route("Genre/{genre}")]
+        public IQueryable<Movies> SearchMoviesByGenre(string genre)
+        {
+            return db.Movies.Where(b => b.Genre.Equals(genre, StringComparison.OrdinalIgnoreCase));
+        }
 
 
         // DELETE: api/Movies/5
