@@ -107,6 +107,16 @@ namespace MovieLibrary.Controllers
         }
 
 
+
+        // GET: api/Movies/Director
+        [Route("DirectorName/{name}")]
+        public IQueryable<Movies> SearchMoviesByDirectorName(string name)
+        {
+            return db.Movies.Where(b => b.DirectorName.Equals(name, StringComparison.OrdinalIgnoreCase));
+        }
+
+
+
         // DELETE: api/Movies/5
         [ResponseType(typeof(Movies))]
         public IHttpActionResult Delete(int id)
