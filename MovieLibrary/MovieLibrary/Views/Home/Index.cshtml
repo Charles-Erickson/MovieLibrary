@@ -188,6 +188,22 @@
         }
 
 
+
+        function updateClick() {
+            Movie = new Object();
+            //Movie.Id = $("#MovieId").val();
+            Movie.Title = $("#Title").val();
+            Movie.Genre = $("#Genre").val();
+            Movie.DirectorName = $("#DirectorName").val();
+            if ($("#updateButton").text().trim() == "Add") {
+                MovieAdd(Movie);
+            }
+            else {
+                MovieUpdate(Movie);
+            }
+        }
+
+
     </script>
     @*<script src="../../Scripts/jquery.movies.js"></script>*@
 </body>
