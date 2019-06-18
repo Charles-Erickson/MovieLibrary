@@ -82,6 +82,20 @@
     <script>
         var uri = 'http://Localhost:58933/api/movies';
 
+
+        $(document).ready(function () {
+
+            // Send an AJAX request
+            MovieList();
+
+        });
+        var Movie = {
+            Id: 0,
+            Title: "",
+            Genre: "",
+            DirectorName: ""
+        }
+
         $(document).ready(function () {
             // Send an AJAX request
             $.getJSON(uri)
